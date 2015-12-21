@@ -26,6 +26,5 @@ namespace TestSortJaggedArray
             }
             return max;
         }
-
     }
 }

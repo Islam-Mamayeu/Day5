@@ -8,26 +8,19 @@ namespace Logic
 {
     public static class Utils
     {
+        public delegate int Comparator(int[] a, int[] b);
        
-        public static void SortWithDelegate(int[][] jaggedArray, Func<int[], int> UniFunc,int order)
+        public static void SortWithDelegate(int[][] jaggedArray, Comparator comp)
         {
             for (int i = 0; i < jaggedArray.Length-1 ; i++)
             {
                 for (int j = 0; j < jaggedArray.Length - 1 - i; j++)
                 {
-                    if ((UniFunc(jaggedArray[j]) < UniFunc(jaggedArray[j + 1]))&&order==0)//Desc
-                    {
+                    if(comp.Invoke(jaggedArray[j],jaggedArray[j + 1])>0)
                         Sort(jaggedArray,j);
-                    }
-                    else if ((UniFunc(jaggedArray[j]) > UniFunc(jaggedArray[j + 1])) && order == 1)//Asc
-                    {
-                        Sort(jaggedArray,j);
-                    }
                 }
             }
         }
-
-
         public static void SortWhithInterface(int[][] jaggedArray, IJaggedArraySortComparer comp)
         {
             if (jaggedArray == null || jaggedArray.Contains(null) || comp == null)
@@ -43,10 +36,6 @@ namespace Logic
                 }
             }
         }
-
-
-
-
         public static int Sum(int[] Array)
         {
             int sum=0;

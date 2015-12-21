@@ -5,11 +5,29 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Logic;
+using static Logic.Utils;
+
 namespace TestSortJaggedArray
 
-{[TestFixture]
+{
+    public class Adaptor : IJaggedArraySortComparer
+    {
+        Comparator del;
+       public Adaptor(Comparator del)
+        {
+            this.del = del;
+        }
+
+        public int Compare(int[] a, int[] b)
+        {
+            return del(a, b);
+        }
+    }
+
+    [TestFixture]
     public class TestSortJaggedArrayClass
     {
+
 
         #region Test_ByMaxElement
         public IEnumerable<TestCaseData> TestDataMaxAsc
@@ -34,7 +52,9 @@ namespace TestSortJaggedArray
         public static void SortJaggedArray_Method_Test_SumAsc(int[][] jaggedArray, int[][] expected)
         {
             IJaggedArraySortComparer comp = new ComparatorMaxElementAsc();
-            Utils.SortWhithInterface(jaggedArray, comp);
+            Comparator del = comp.Compare;
+
+            Utils.SortWhithInterface(jaggedArray, new Adaptor(del));
             CollectionAssert.AreEqual(expected, jaggedArray);
         }
 
@@ -97,38 +117,64 @@ namespace TestSortJaggedArray
 
         }
 
-    
-    public IEnumerable<TestCaseData> TestDataSumDesc
-    {
-        get
+
+        public IEnumerable<TestCaseData> TestDataSumDesc
         {
-            yield return new TestCaseData(
-                new int[][] {
+            get
+            {
+                yield return new TestCaseData(
+                    new int[][] {
                         new int[] { 7, 1000 },
                         new int[] { 8, 1 },
                         new int[] { 4, 6, 9000 } },
 
-                new int[][] {
+                    new int[][] {
                         new int[] { 8, 1 },
                         new int[] { 4, 6, 9 },
                         new int[] { 7, 3, 7, 2,1000 } });
+            }
+
+        }
+        [Test, TestCaseSource(nameof(TestDataSumDesc))]
+        public static void SortJaggedArray_Method_Test_Max_Desc(int[][] jaggedArray, int[][] expected)
+        {
+
+            IJaggedArraySortComparer comp = new ComparatorSumDesc();
+
+            Utils.SortWhithInterface(jaggedArray, comp);
+            CollectionAssert.AreEqual(expected, jaggedArray);
+
+
+
+
+        }
+        #endregion Test_BySum
+
+        #region Delegate_Asc
+        [Test, TestCaseSource(nameof(TestDataMaxAsc))]
+        public static void SortJaggedArray_Method_Test_Max_Asc_Delegate(int[][] jaggedArray,int[][] expected)
+        {
+            ComparatorMaxElementAsc obj = new ComparatorMaxElementAsc();
+            Comparator comp = obj.Compare;
+
+            Utils.SortWithDelegate(jaggedArray, comp);
+            CollectionAssert.AreEqual(expected, jaggedArray);
+
         }
 
+        #endregion Delegate_Asc
+        #region Delegate_Desc
+        [Test, TestCaseSource(nameof(TestDataMaxDesc))]
+        public static void SortJaggedArray_Method_Test_Max_Desc_Delegate(int[][] jaggedArray, int[][] expected)
+        {
+            ComparatorMaxElementAsc obj = new ComparatorMaxElementAsc();
+            Comparator comp = obj.Compare;
+
+            Utils.SortWithDelegate(jaggedArray, comp);
+            CollectionAssert.AreEqual(expected, jaggedArray);
+
+        }
+        #endregion Delegate_Desc
+
     }
-    [Test, TestCaseSource(nameof(TestDataSumDesc))]
-    public static void SortJaggedArray_Method_Test_Max_Desc(int[][] jaggedArray, int[][] expected)
-    {
-
-        IJaggedArraySortComparer comp = new ComparatorSumDesc();
-
-        Utils.SortWhithInterface(jaggedArray, comp);
-        CollectionAssert.AreEqual(expected, jaggedArray);
-
-
-    }
-
-}
-
-
-    #endregion Test_BySum
 }
