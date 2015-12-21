@@ -1,0 +1,8 @@
+c:\users\islam_mamayeu@epam.com\documents\visual studio 2015\Projects\Day1Task2\ConsoleUI\bin\Debug\ConsoleUI.exe.config
+c:\users\islam_mamayeu@epam.com\documents\visual studio 2015\Projects\Day1Task2\ConsoleUI\obj\Debug\ConsoleUI.csprojResolveAssemblyReference.cache
+c:\users\islam_mamayeu@epam.com\documents\visual studio 2015\Projects\Day1Task2\ConsoleUI\bin\Debug\ConsoleUI.exe
+c:\users\islam_mamayeu@epam.com\documents\visual studio 2015\Projects\Day1Task2\ConsoleUI\bin\Debug\ConsoleUI.pdb
+c:\users\islam_mamayeu@epam.com\documents\visual studio 2015\Projects\Day1Task2\ConsoleUI\obj\Debug\ConsoleUI.exe
+c:\users\islam_mamayeu@epam.com\documents\visual studio 2015\Projects\Day1Task2\ConsoleUI\obj\Debug\ConsoleUI.pdb
+C:\Users\Islam_Mamayeu@epam.com\Documents\Visual Studio 2015\Projects\Day1Task2\ConsoleUI\bin\Debug\Logic.dll
+C:\Users\Islam_Mamayeu@epam.com\Documents\Visual Studio 2015\Projects\Day1Task2\ConsoleUI\bin\Debug\Logic.pdb
