@@ -7,7 +7,7 @@ using Logic;
 
 namespace TestSortJaggedArray
 {
-    class ComparatorSumDesc :IJaggedArraySortComparer
+    class ComparatorSumDesc : IComparer<int[]>
     {
         public int Compare(int[] a, int[] b)
         {

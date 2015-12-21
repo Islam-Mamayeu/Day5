@@ -21,7 +21,7 @@ namespace Logic
                 }
             }
         }
-        public static void SortWhithInterface(int[][] jaggedArray, IJaggedArraySortComparer comp)
+        public static void SortWhithInterface(int[][] jaggedArray, IComparer<int[]> comp)
         {
             if (jaggedArray == null || jaggedArray.Contains(null) || comp == null)
                 throw new ArgumentNullException();

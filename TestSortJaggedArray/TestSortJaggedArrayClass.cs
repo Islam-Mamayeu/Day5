@@ -10,7 +10,7 @@ using static Logic.Utils;
 namespace TestSortJaggedArray
 
 {
-    public class Adaptor : IJaggedArraySortComparer
+    public class Adaptor : IComparer<int[]>
     {
         Comparator del;
        public Adaptor(Comparator del)
@@ -51,7 +51,7 @@ namespace TestSortJaggedArray
 
         public static void SortJaggedArray_Method_Test_SumAsc(int[][] jaggedArray, int[][] expected)
         {
-            IJaggedArraySortComparer comp = new ComparatorMaxElementAsc();
+            IComparer<int[]> comp = new ComparatorMaxElementAsc();
             Comparator del = comp.Compare;
 
             Utils.SortWhithInterface(jaggedArray, new Adaptor(del));
@@ -79,7 +79,7 @@ namespace TestSortJaggedArray
         [Test, TestCaseSource(nameof(TestDataMaxDesc))]
         public static void SortJaggedArray_Method_Test_SumDesc(int[][] jaggedArray, int[][] expected)
         {
-            IJaggedArraySortComparer comp = new ComparatorMaxElementDesc();
+            IComparer<int[]> comp = new ComparatorMaxElementDesc();
             Utils.SortWhithInterface(jaggedArray, comp);
             CollectionAssert.AreEqual(expected, jaggedArray);
         }
@@ -109,7 +109,7 @@ namespace TestSortJaggedArray
         public static void SortJaggedArray_Method_Test_Max_Asc(int[][] jaggedArray, int[][] expected)
         {
 
-            IJaggedArraySortComparer comp = new ComparatorSumAsc();
+            IComparer<int[]> comp = new ComparatorSumAsc();
 
             Utils.SortWhithInterface(jaggedArray, comp);
             CollectionAssert.AreEqual(expected, jaggedArray);
@@ -139,7 +139,7 @@ namespace TestSortJaggedArray
         public static void SortJaggedArray_Method_Test_Max_Desc(int[][] jaggedArray, int[][] expected)
         {
 
-            IJaggedArraySortComparer comp = new ComparatorSumDesc();
+            IComparer<int[]> comp = new ComparatorSumDesc();
 
             Utils.SortWhithInterface(jaggedArray, comp);
             CollectionAssert.AreEqual(expected, jaggedArray);
@@ -176,5 +176,24 @@ namespace TestSortJaggedArray
         }
         #endregion Delegate_Desc
 
+        #region Exception_Test
+        public IEnumerable<TestCaseData> TestEcseption
+        {
+            get
+            {
+                yield return new TestCaseData(null, new ComparatorMaxElementAsc()).Throws(typeof(ArgumentNullException));
+
+            }
+
+        }
+        
+        [Test,TestCaseSource(nameof(TestEcseption))]
+
+        public static void SortJaggedArray_Exseptions_Test(int[][]jaggedArray, IComparer<int[]>comp)
+        {
+            Utils.SortWhithInterface(jaggedArray, comp);
+
+        }
+        #endregion Exseption_Test
     }
 }

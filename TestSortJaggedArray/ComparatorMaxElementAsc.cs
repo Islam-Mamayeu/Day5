@@ -7,7 +7,7 @@ using Logic;
 
 namespace TestSortJaggedArray
 {
-    class ComparatorMaxElementAsc : IJaggedArraySortComparer
+    class ComparatorMaxElementAsc : IComparer<int[]>
     {
         public int Compare(int[] a, int[] b)
         {
