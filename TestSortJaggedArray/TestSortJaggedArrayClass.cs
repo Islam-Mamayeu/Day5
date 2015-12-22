@@ -10,19 +10,6 @@ using static Logic.Utils;
 namespace TestSortJaggedArray
 
 {
-    public class Adaptor : IComparer<int[]>
-    {
-        Comparator del;
-       public Adaptor(Comparator del)
-        {
-            this.del = del;
-        }
-
-        public int Compare(int[] a, int[] b)
-        {
-            return del(a, b);
-        }
-    }
 
     [TestFixture]
     public class TestSortJaggedArrayClass
@@ -54,7 +41,7 @@ namespace TestSortJaggedArray
             IComparer<int[]> comp = new ComparatorMaxElementAsc();
             Comparator del = comp.Compare;
 
-            Utils.SortWhithInterface(jaggedArray, new Adaptor(del));
+            Utils.BubbleSort(jaggedArray, del);
             CollectionAssert.AreEqual(expected, jaggedArray);
         }
 
@@ -80,7 +67,7 @@ namespace TestSortJaggedArray
         public static void SortJaggedArray_Method_Test_SumDesc(int[][] jaggedArray, int[][] expected)
         {
             IComparer<int[]> comp = new ComparatorMaxElementDesc();
-            Utils.SortWhithInterface(jaggedArray, comp);
+            Utils.BubbleSort(jaggedArray, comp);
             CollectionAssert.AreEqual(expected, jaggedArray);
         }
 
@@ -111,7 +98,7 @@ namespace TestSortJaggedArray
 
             IComparer<int[]> comp = new ComparatorSumAsc();
 
-            Utils.SortWhithInterface(jaggedArray, comp);
+            Utils.BubbleSort(jaggedArray, comp);
             CollectionAssert.AreEqual(expected, jaggedArray);
 
 
@@ -141,7 +128,7 @@ namespace TestSortJaggedArray
 
             IComparer<int[]> comp = new ComparatorSumDesc();
 
-            Utils.SortWhithInterface(jaggedArray, comp);
+            Utils.BubbleSort(jaggedArray, comp);
             CollectionAssert.AreEqual(expected, jaggedArray);
 
 
@@ -157,7 +144,7 @@ namespace TestSortJaggedArray
             ComparatorMaxElementAsc obj = new ComparatorMaxElementAsc();
             Comparator comp = obj.Compare;
 
-            Utils.SortWithDelegate(jaggedArray, comp);
+            Utils.BubbleSort(jaggedArray, comp);
             CollectionAssert.AreEqual(expected, jaggedArray);
 
         }
@@ -170,7 +157,7 @@ namespace TestSortJaggedArray
             ComparatorMaxElementAsc obj = new ComparatorMaxElementAsc();
             Comparator comp = obj.Compare;
 
-            Utils.SortWithDelegate(jaggedArray, comp);
+            Utils.BubbleSort(jaggedArray, comp);
             CollectionAssert.AreEqual(expected, jaggedArray);
 
         }
@@ -191,7 +178,7 @@ namespace TestSortJaggedArray
 
         public static void SortJaggedArray_Exseptions_Test(int[][]jaggedArray, IComparer<int[]>comp)
         {
-            Utils.SortWhithInterface(jaggedArray, comp);
+            Utils.BubbleSort(jaggedArray, comp);
 
         }
         #endregion Exseption_Test

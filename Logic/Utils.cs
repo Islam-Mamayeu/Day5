@@ -6,22 +6,34 @@ using System.Threading.Tasks;
 
 namespace Logic
 {
+    
+
     public static class Utils
     {
-        public delegate int Comparator(int[] a, int[] b);
-       
-        public static void SortWithDelegate(int[][] jaggedArray, Comparator comp)
+        private class Adaptor : IComparer<int[]>
         {
-            for (int i = 0; i < jaggedArray.Length-1 ; i++)
+            Comparator del;
+
+            public Adaptor(Comparator del)
             {
-                for (int j = 0; j < jaggedArray.Length - 1 - i; j++)
-                {
-                    if(comp.Invoke(jaggedArray[j],jaggedArray[j + 1])>0)
-                        Sort(jaggedArray,j);
-                }
+                this.del = del;
+            }
+
+            public int Compare(int[] a, int[] b)
+            {
+                return del(a, b);
             }
         }
-        public static void SortWhithInterface(int[][] jaggedArray, IComparer<int[]> comp)
+
+        public delegate int Comparator(int[] a, int[] b);
+
+        public static void BubbleSort(int[][] jaggedArray, Comparator comp)
+        {
+            if (jaggedArray == null || jaggedArray.Contains(null) || comp == null)
+                throw new ArgumentNullException();
+            BubbleSort(jaggedArray,new Adaptor(comp));       
+        }
+        public static void BubbleSort(int[][] jaggedArray, IComparer<int[]> comp)
         {
             if (jaggedArray == null || jaggedArray.Contains(null) || comp == null)
                 throw new ArgumentNullException();
@@ -31,59 +43,17 @@ namespace Logic
                 for (int j = 0; j < jaggedArray.Length - 1 - i; j++)
                 {
 
-                    if( comp.Compare(jaggedArray[j],jaggedArray[j + 1])>0)
-                       Sort(jaggedArray, j);                 
+                    if (comp.Compare(jaggedArray[j], jaggedArray[j + 1]) > 0)
+                        Swap(ref jaggedArray[j], ref jaggedArray[j + 1]);
                 }
             }
         }
-        public static int Sum(int[] Array)
-        {
-            int sum=0;
 
-            for(int i=0;i<Array.Length;i++)
-            {
-                sum += Array[i];
-            }
-            return sum;
-        }
-        public static int Max(int[] Array)
+        private static void Swap(ref int[] a, ref int[] b)
         {
-            int max = Array[0];
-            for (int i = 0; i < Array.Length; i++)
-            {
-                if (Array[i] > max)
-                    max = Array[i];
-            }
-            return max;
-        }
-        public static int Min(int[] Array)
-        {
-            int min = Array[0];
-            for (int i = 0; i < Array.Length; i++)
-            {
-                if (Array[i] < min)
-                    min = Array[i];
-            }
-            return min;
-        }
-        public static void Print(int[][]jaggedArray)
-        {
-            for (int i = 0; i < jaggedArray.Length; i++)
-            {
-                int[] innerArray = jaggedArray[i];
-                for (int a = 0; a < innerArray.Length; a++)
-                {
-                    Console.Write(innerArray[a] + " ");
-                }
-                Console.WriteLine();
-            }
-        }
-
-        private static void Sort(int[][] jaggedArray, int j)
-        {
-            int[] x = jaggedArray[j];
-            jaggedArray[j] = jaggedArray[j + 1];
-            jaggedArray[j + 1] = x;
+            int[] x = a;
+            a = b;
+            b = x;
         }
 
 
