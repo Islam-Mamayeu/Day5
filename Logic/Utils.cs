@@ -10,21 +10,6 @@ namespace Logic
 
     public static class Utils
     {
-        private class Adaptor : IComparer<int[]>
-        {
-            Comparator del;
-
-            public Adaptor(Comparator del)
-            {
-                this.del = del;
-            }
-
-            public int Compare(int[] a, int[] b)
-            {
-                return del(a, b);
-            }
-        }
-
         public delegate int Comparator(int[] a, int[] b);
 
         public static void BubbleSort(int[][] jaggedArray, Comparator comp)
@@ -54,6 +39,20 @@ namespace Logic
             int[] x = a;
             a = b;
             b = x;
+        }
+        private class Adaptor : IComparer<int[]>
+        {
+            Comparator del;
+
+            public Adaptor(Comparator del)
+            {
+                this.del = del;
+            }
+
+            public int Compare(int[] a, int[] b)
+            {
+                return del(a, b);
+            }
         }
 
 
